@@ -24,7 +24,7 @@ resource "aws_key_pair" "this" {
 }
 
 data "template_file" "initial_script" {
-  template = "${file("${path.module}/../../conf/user_data.sh")}"
+  template = "${file("${path.module}/../../${var.initial_script}")}"
   vars     = {}
 }
 
