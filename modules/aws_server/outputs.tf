@@ -27,3 +27,8 @@ output "user_data" {
   description = "User Data"
   value       = aws_instance.certification.user_data
 }
+
+output "custom_ami_id" {
+  description = "AMI created out of original AMI"
+  value = aws_ami_from_instance.certification-ami.id
+}

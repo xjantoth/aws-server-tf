@@ -88,3 +88,14 @@ resource "aws_instance" "certification" {
     Delete    = "true"
   }
 }
+
+resource "aws_ami_from_instance" "certification-ami" {
+  name               = "terraform-example"
+  source_instance_id = aws_instance.certification.id
+
+  tags = {
+    Name      = "Certification"
+    Terraform = "true"
+    Delete    = "true"
+  }
+}

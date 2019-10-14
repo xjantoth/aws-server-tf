@@ -27,3 +27,8 @@ output "user_data" {
   description = "User Data"
   value       = module.aws_server.user_data
 }
+
+output "custom_ami_id" {
+  description = "AMI created out of original AMI"
+  value = module.aws_server.custom_ami_id
+}
