@@ -1,0 +1,6 @@
+aws_region     = "eu-central-1"
+aws_access_key = "..."
+aws_secret_key = "..."
+ssh_public_key = "/home/user/.ssh/certification.pub"
+vpc_id         = "vpc-..."
+initial_script = "conf/user_data.sh"
