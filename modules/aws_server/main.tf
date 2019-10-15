@@ -36,9 +36,9 @@ resource "aws_security_group" "allow_tls" {
   ingress {
     # TLS (change to whatever ports you need)
     description = "Allow incoming HTTP traffic"
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     # Please restrict your ingress to only necessary IPs and ports.
     # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
     cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
@@ -47,9 +47,9 @@ resource "aws_security_group" "allow_tls" {
   ingress {
     # TLS (change to whatever ports you need)
     description = "Allow incoming SSH traffic"
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     # Please restrict your ingress to only necessary IPs and ports.
     # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
     cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
@@ -82,6 +82,9 @@ resource "aws_instance" "certification" {
   # /bin/bash /var/lib/cloud/instance/scripts/part-001
   user_data = "${data.template_file.initial_script.rendered}"
   # user_data = "${local.local_user_data}"
+  
+  placement_group = aws_placement_group.partition.id
+
   tags = {
     Name      = "Certification"
     Terraform = "true"
@@ -98,4 +101,20 @@ resource "aws_ami_from_instance" "certification-ami" {
     Terraform = "true"
     Delete    = "true"
   }
+}
+
+# Placement Group
+resource "aws_placement_group" "cluster" {
+  name     = "cluster-placement-group"
+  strategy = "cluster"
+}
+
+resource "aws_placement_group" "spread" {
+  name     = "spread-placement-group"
+  strategy = "spread"
+}
+
+resource "aws_placement_group" "partition" {
+  name     = "partition-placement-group"
+  strategy = "partition"
 }

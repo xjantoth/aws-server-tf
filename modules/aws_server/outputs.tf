@@ -30,5 +30,21 @@ output "user_data" {
 
 output "custom_ami_id" {
   description = "AMI created out of original AMI"
-  value = aws_ami_from_instance.certification-ami.id
+  value       = aws_ami_from_instance.certification-ami.id
 }
+
+output "aws_placement_group_cluster_id" {
+  description = "Cluster Placement Group"
+  value       = aws_placement_group.cluster.id
+}
+
+output "aws_placement_group_spread_id" {
+  description = "Spread Placement Group"
+  value       = aws_placement_group.spread.id
+}
+
+output "aws_placement_group_partition_id" {
+  description = "Partition Placement Group"
+  value       = aws_placement_group.partition.id
+}
+

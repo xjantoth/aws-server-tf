@@ -30,5 +30,20 @@ output "user_data" {
 
 output "custom_ami_id" {
   description = "AMI created out of original AMI"
-  value = module.aws_server.custom_ami_id
+  value       = module.aws_server.custom_ami_id
+}
+
+output "aws_placement_group_cluster_id" {
+  description = "Cluster Placement Group"
+  value       = module.aws_server.aws_placement_group_cluster_id
+}
+
+output "aws_placement_group_spread_id" {
+  description = "Spread Placement Group"
+  value       = module.aws_server.aws_placement_group_spread_id
+}
+
+output "aws_placement_group_partition_id" {
+  description = "Partition Placement Group"
+  value       = module.aws_server.aws_placement_group_partition_id
 }
