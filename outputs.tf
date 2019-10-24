@@ -47,3 +47,18 @@ output "aws_placement_group_partition_id" {
   description = "Partition Placement Group"
   value       = module.aws_server.aws_placement_group_partition_id
 }
+
+output "aws_vpc_default_id" {
+  description = "AWS VPC default ID"
+  value       = data.aws_vpc.default.id
+}
+
+output "aws_alb_security_group_id" {
+  description = "Name of the ALB Security Group"
+  value       = module.aws_alb_security_group.alb_security_group_id
+}
+
+output "aws_instance_certification_id" {
+  description = "Server AWS instance ID"
+  value       = module.aws_server.aws_instance_certification_id
+}

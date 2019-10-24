@@ -48,3 +48,7 @@ output "aws_placement_group_partition_id" {
   value       = aws_placement_group.partition.id
 }
 
+output "aws_instance_certification_id" {
+  description = "Server AWS instance ID"
+  value       = aws_instance.certification.id
+}

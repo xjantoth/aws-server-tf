@@ -28,79 +28,28 @@ data "template_file" "initial_script" {
   vars     = {}
 }
 
-resource "aws_security_group" "allow_tls" {
-  name        = "Certification Security Group"
-  description = "Allow TLS inbound traffic"
-  vpc_id      = "${var.vpc_id}"
-
-  ingress {
-    # TLS (change to whatever ports you need)
-    description = "Allow incoming HTTP traffic"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    # Please restrict your ingress to only necessary IPs and ports.
-    # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
-    cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
-  }
-
-  ingress {
-    # TLS (change to whatever ports you need)
-    description = "Allow incoming SSH traffic"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    # Please restrict your ingress to only necessary IPs and ports.
-    # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
-    cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
-  }
-
-  egress {
-    description = "Allow all outbound traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-
-  }
-
-  tags = {
-    Name      = "Certification"
-    Terraform = "true"
-    Delete    = "true"
-  }
-}
-
 resource "aws_instance" "certification" {
   ami           = "${data.aws_ami.this.id}"
   instance_type = "t2.micro"
 
-  security_groups = toset(["${aws_security_group.allow_tls.name}"])
+  security_groups = toset([var.server_security_group_name])
   key_name        = aws_key_pair.this.key_name
 
   # Notice that User Data Shell script will be copied:
   # /bin/bash /var/lib/cloud/instance/scripts/part-001
   user_data = "${data.template_file.initial_script.rendered}"
   # user_data = "${local.local_user_data}"
-  
+
   placement_group = aws_placement_group.partition.id
 
-  tags = {
-    Name      = "Certification"
-    Terraform = "true"
-    Delete    = "true"
-  }
+  tags = var.custom_tags
 }
 
 resource "aws_ami_from_instance" "certification-ami" {
   name               = "terraform-example"
   source_instance_id = aws_instance.certification.id
 
-  tags = {
-    Name      = "Certification"
-    Terraform = "true"
-    Delete    = "true"
-  }
+  tags = var.custom_tags
 }
 
 # Placement Group
