@@ -1,6 +1,7 @@
 locals {
   # Ids for multiple sets of EC2 instances, merged together
-  allowed_tcp_ports = ["80"]
+  allowed_tcp_ports = ["80", "8080"]
+  allow_ssh_port = ["22"]
 }
 
 resource "aws_security_group" "this" {
