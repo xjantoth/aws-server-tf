@@ -28,7 +28,12 @@ data "template_file" "initial_script" {
   vars     = {}
 }
 
+locals {
+  tags = merge({ for a, b in var.custom_tags : a => format("%s-1", b) if a == "Name" }, { for a, b in var.custom_tags : a => b if a != "Name" })
+}
+
 resource "aws_instance" "certification" {
+  count         = var.number_of_inatances
   ami           = "${data.aws_ami.this.id}"
   instance_type = "t2.micro"
 
@@ -40,30 +45,39 @@ resource "aws_instance" "certification" {
   user_data = "${data.template_file.initial_script.rendered}"
   # user_data = "${local.local_user_data}"
 
-  placement_group = aws_placement_group.partition.id
+  # placement_group = aws_placement_group.partition.id
 
-  tags = var.custom_tags
+  tags = {
+    for a, b in var.custom_tags :
+    a => (a == "Name" ? format("%s-%s", "ec2-instance", count.index + 1) : b)
+  }
+
+
+
 }
 
-resource "aws_ami_from_instance" "certification-ami" {
-  name               = "terraform-example"
-  source_instance_id = aws_instance.certification.id
 
-  tags = var.custom_tags
-}
 
-# Placement Group
-resource "aws_placement_group" "cluster" {
-  name     = "cluster-placement-group"
-  strategy = "cluster"
-}
 
-resource "aws_placement_group" "spread" {
-  name     = "spread-placement-group"
-  strategy = "spread"
-}
+# resource "aws_ami_from_instance" "certification-ami" {
+#   name               = "terraform-example"
+#   source_instance_id = aws_instance.certification.id
 
-resource "aws_placement_group" "partition" {
-  name     = "partition-placement-group"
-  strategy = "partition"
-}
+#   tags = var.custom_tags
+# }
+
+# # Placement Group
+# resource "aws_placement_group" "cluster" {
+#   name     = "cluster-placement-group"
+#   strategy = "cluster"
+# }
+
+# resource "aws_placement_group" "spread" {
+#   name     = "spread-placement-group"
+#   strategy = "spread"
+# }
+
+# resource "aws_placement_group" "partition" {
+#   name     = "partition-placement-group"
+#   strategy = "partition"
+# }

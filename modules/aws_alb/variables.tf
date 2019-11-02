@@ -20,5 +20,7 @@ variable "vpc_id" {
 
 variable "aws_instance_certification_id" {
   description = "Server ID to be attached to a target group."
-  type        = "string"
+  type        = "list"
 }
+
+

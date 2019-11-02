@@ -18,3 +18,8 @@ variable "custom_tags" {
   type        = "map"
 }
 
+variable "number_of_inatances" {
+  description = "Number of AWS EC2 instances to be created"
+  type        = number
+}
+

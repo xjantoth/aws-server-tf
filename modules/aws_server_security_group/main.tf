@@ -1,7 +1,7 @@
 locals {
   # Ids for multiple sets of EC2 instances, merged together
   allowed_tcp_ports = ["80", "8080"]
-  allow_ssh_port = ["22"]
+  allow_ssh_port    = ["22"]
 }
 
 resource "aws_security_group" "this" {
@@ -22,6 +22,22 @@ resource "aws_security_group" "this" {
 
       # cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
       security_groups = list(var.alb_security_group_id)
+    }
+  }
+
+  dynamic "ingress" {
+    for_each = local.allow_ssh_port
+
+    content {
+      description = "Allow incoming SSH traffic"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      # Please restrict your ingress to only necessary IPs and ports.
+      # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
+
+      cidr_blocks = ["0.0.0.0/0"] # add a CIDR block here
+      # security_groups = list(var.alb_security_group_id)
     }
   }
 

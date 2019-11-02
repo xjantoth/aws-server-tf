@@ -40,6 +40,6 @@ module "aws_server" {
   initial_script             = var.initial_script
   server_security_group_name = module.aws_server_security_group.server_security_group_name
   custom_tags                = var.custom_tags
+  number_of_inatances        = var.number_of_inatances
 }
-
 

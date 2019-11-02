@@ -21,7 +21,7 @@ for i in docker httpd; do
     systemctl enable $i && systemctl start $i
 done
 
-echo "This is HTTPD from Terrafrom Certification" > /var/www/html/index.html
+echo "This is HTTPD from Terrafrom Certification $(uname -n)" > /var/www/html/index.html
 
 WORK=/opt/wp-docker
 mkdir -p $WORK
