@@ -34,6 +34,12 @@ resource "aws_lb_target_group" "http" {
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 
+  stickiness {
+    type = "lb_cookie"
+    cookie_duration = 20
+    enabled = true
+  }
+
   tags = {
     for a, b in var.custom_tags :
     a => (a == "Name" ? format("%s-%s", "tg-alb", each.value) : b)
