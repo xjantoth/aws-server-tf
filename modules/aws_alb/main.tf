@@ -35,9 +35,9 @@ resource "aws_lb_target_group" "http" {
   vpc_id   = var.vpc_id
 
   stickiness {
-    type = "lb_cookie"
+    type            = "lb_cookie"
     cookie_duration = 20
-    enabled = true
+    enabled         = true
   }
 
   tags = {
@@ -45,6 +45,7 @@ resource "aws_lb_target_group" "http" {
     a => (a == "Name" ? format("%s-%s", "tg-alb", each.value) : b)
   }
 }
+
 
 
 resource "aws_lb_listener" "front_end" {

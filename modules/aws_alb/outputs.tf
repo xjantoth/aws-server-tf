@@ -13,6 +13,8 @@ output "aws_lb_target_group_http_json" {
   value       = { for j, k in aws_lb_target_group.http : j => k }
 }
 
+
+
 output "aws_lb_listener_front_end_json" {
   description = "All data about aws alb listeners"
   value       = { for j, k in aws_lb_listener.front_end : j => k }
@@ -21,5 +23,11 @@ output "aws_lb_listener_front_end_json" {
 output "aws_lb_target_group_attachment_http_json" {
   description = "All data about aws alb attachemets to tagret groups"
   value       = { for j, k in aws_lb_target_group_attachment.http : j => k }
+}
+
+output "aws_lb_target_group_http_arns" {
+  description = "All data about target groups"
+  value = [for element in [for value in aws_lb_target_group.http : value] :
+  lookup(element, "arn")]
 }
 

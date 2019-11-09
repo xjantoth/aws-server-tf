@@ -78,6 +78,11 @@ output "aws_lb_target_group_http_json" {
   value       = module.aws_alb.aws_lb_target_group_http_json
 }
 
+output "aws_lb_target_group_http_arns" {
+  description = "All data about target groups"
+  value       = module.aws_alb.aws_lb_target_group_http_arns
+}
+
 output "aws_lb_listener_front_end_json" {
   description = "All data about aws alb listeners"
   value       = module.aws_alb.aws_lb_listener_front_end_json

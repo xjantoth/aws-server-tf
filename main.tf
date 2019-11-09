@@ -12,6 +12,10 @@ data "aws_subnet_ids" "default" {
   vpc_id = data.aws_vpc.default.id
 }
 
+data "aws_availability_zones" "default" {
+  state = "available"
+}
+
 module "aws_alb_security_group" {
   source      = "./modules/aws_alb_security_group"
   vpc_id      = data.aws_vpc.default.id
@@ -42,4 +46,17 @@ module "aws_server" {
   custom_tags                = var.custom_tags
   number_of_inatances        = var.number_of_inatances
 }
+
+module "aws_asg" {
+  source                 = "./modules/aws_asg"
+  vpc_security_group_ids = list(module.aws_server_security_group.server_security_group_id)
+  availability_zones     = data.aws_availability_zones.default.names
+  subnets                = data.aws_subnet_ids.default.ids
+  initial_script         = var.initial_script
+  custom_tags            = var.custom_tags
+  target_group_arns      = module.aws_alb.aws_lb_target_group_http_arns
+  ssh_public_key         = var.ssh_public_key
+}
+
+
 

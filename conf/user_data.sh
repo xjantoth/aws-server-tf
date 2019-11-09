@@ -65,3 +65,4 @@ echo "This is HTTPD from Terrafrom Certification $(uname -n)" > /var/www/html/in
 # EOF
 
 # docker-compose up -d
+    
