@@ -60,12 +60,12 @@ resource "aws_launch_template" "this" {
   monitoring {
     enabled = true
   }
-  key_name               = aws_key_pair.this.key_name
+  key_name = aws_key_pair.this.key_name
   tag_specifications {
     resource_type = "instance"
 
     tags = var.custom_tags
-}
+  }
   vpc_security_group_ids = var.vpc_security_group_ids
   user_data              = "${base64encode(data.template_file.initial_script.rendered)}"
 }
