@@ -19,12 +19,14 @@ data "aws_ami" "this" {
 }
 
 resource "aws_autoscaling_group" "this" {
+  count = var.enable_asg
+
   name                      = "asg-tf"
   max_size                  = 3
   min_size                  = 1
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  desired_capacity          = 1
+  desired_capacity          = 2
   force_delete              = true
 
   availability_zones  = var.availability_zones
@@ -37,7 +39,7 @@ resource "aws_autoscaling_group" "this" {
     version = "$Latest"
   }
 
-  # tags = {"Name": "manual"}
+  # tags = [for key,value in var.custom_tags:  map(key, (key == "Name" ? format("%s-%s", "asg-tf", value) : value))]
 }
 
 data "template_file" "initial_script" {
@@ -56,6 +58,16 @@ resource "aws_launch_template" "this" {
   name_prefix   = "certification"
   image_id      = data.aws_ami.this.id
   instance_type = "t2.micro"
+
+  block_device_mappings {
+    device_name = "/dev/sdb"
+
+    ebs {
+      delete_on_termination = true
+      volume_size           = 1
+      volume_type           = "standard"
+    }
+  }
 
   monitoring {
     enabled = true

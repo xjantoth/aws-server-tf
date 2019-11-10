@@ -18,6 +18,7 @@ output "availability_zone" {
   value       = [for i in aws_instance.certification : i.availability_zone]
 }
 
+
 output "arn" {
   description = "ARN of certification instance"
   value       = [for i in aws_instance.certification : i.arn]

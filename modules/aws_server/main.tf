@@ -33,7 +33,8 @@ locals {
 }
 
 resource "aws_instance" "certification" {
-  count         = var.number_of_inatances
+  count = var.number_of_inatances
+
   ami           = "${data.aws_ami.this.id}"
   instance_type = "t2.micro"
 
@@ -52,10 +53,7 @@ resource "aws_instance" "certification" {
     a => (a == "Name" ? format("%s-%s", "ec2-instance", count.index + 1) : b)
   }
 
-
-
 }
-
 
 
 

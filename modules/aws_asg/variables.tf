@@ -31,3 +31,8 @@ variable "ssh_public_key" {
   description = "SSH public key"
   type        = "string"
 }
+
+variable "enable_asg" {
+  description = "Enable ASG true/false"
+  type        = number
+}

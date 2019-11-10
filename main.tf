@@ -48,6 +48,8 @@ module "aws_server" {
 }
 
 module "aws_asg" {
+  enable_asg = var.enable_asg
+
   source                 = "./modules/aws_asg"
   vpc_security_group_ids = list(module.aws_server_security_group.server_security_group_id)
   availability_zones     = data.aws_availability_zones.default.names

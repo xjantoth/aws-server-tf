@@ -32,3 +32,7 @@ variable "number_of_inatances" {
   type        = number
 }
 
+variable "enable_asg" {
+  description = "Enable ASG true/false"
+  type        = number
+}
