@@ -33,6 +33,16 @@ variable "ssh_public_key" {
 }
 
 variable "enable_asg" {
-  description = "Enable ASG true/false"
+  description = "Enable ASG 0/1"
   type        = number
+}
+
+variable "enabled_asg_efs" {
+  description = "Enable ASG EFS 0/1"
+  type        = bool
+}
+
+variable "vpc_id" {
+  description = "Main VPC ID"
+  type        = "string"
 }

@@ -36,3 +36,8 @@ variable "enable_asg" {
   description = "Enable ASG true/false"
   type        = number
 }
+
+variable "enabled_asg_efs" {
+  description = "Enable ASG EFS 0/1"
+  type        = bool
+}

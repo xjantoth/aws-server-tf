@@ -58,6 +58,8 @@ module "aws_asg" {
   custom_tags            = var.custom_tags
   target_group_arns      = module.aws_alb.aws_lb_target_group_http_arns
   ssh_public_key         = var.ssh_public_key
+  enabled_asg_efs        = var.enabled_asg_efs
+  vpc_id                = data.aws_vpc.default.id
 }
 
 
