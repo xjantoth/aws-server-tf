@@ -94,22 +94,22 @@ resource "aws_efs_file_system" "efs" {
 }
 
 resource "aws_efs_mount_target" "efs" {
-  count           = var.enabled_asg_efs && length(var.subnets) > 0 ? length(var.subnets) : 0
+  count = var.enabled_asg_efs && length(var.subnets) > 0 ? length(var.subnets) : 0
 
-  file_system_id  = join("", aws_efs_file_system.efs.*.id)
+  file_system_id = join("", aws_efs_file_system.efs.*.id)
   # ip_address      = data.aws_instances.asg_instances.public_ips[count.index]
   subnet_id       = var.subnets[count.index]
   security_groups = [join("", aws_security_group.efs.*.id)]
 }
 
 
-data "aws_instances" "asg_instances" {
-   filter {
-    name = "tag:Name"
-    values = ["Certification"]
-   }
-  instance_state_names = ["running"]
-}
+# data "aws_instances" "asg_instances" {
+#   filter {
+#     name   = "tag:Name"
+#     values = ["Certification"]
+#   }
+#   instance_state_names = ["running"]
+# }
 
 
 resource "aws_security_group" "efs" {

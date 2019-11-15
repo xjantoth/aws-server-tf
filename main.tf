@@ -59,8 +59,17 @@ module "aws_asg" {
   target_group_arns      = module.aws_alb.aws_lb_target_group_http_arns
   ssh_public_key         = var.ssh_public_key
   enabled_asg_efs        = var.enabled_asg_efs
-  vpc_id                = data.aws_vpc.default.id
+  vpc_id                 = data.aws_vpc.default.id
 }
+
+module "aws_rds" {
+  source                 = "./modules/aws_rds"
+  custom_tags            = var.custom_tags
+  vpc_security_group_ids = list(module.aws_server_security_group.server_security_group_id)
+  vpc_id                 = data.aws_vpc.default.id
+
+}
+
 
 
 

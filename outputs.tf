@@ -93,7 +93,7 @@ output "aws_lb_target_group_attachment_http_json" {
   value       = module.aws_alb.aws_lb_target_group_attachment_http_json
 }
 
-output "aws_instances_running" {
-  description = "List of running EC2 Private IP addresses"
-  value = module.aws_asg.aws_instances_running
-}
+# output "aws_instances_running" {
+#   description = "List of running EC2 Private IP addresses"
+#   value       = module.aws_asg.aws_instances_running
+# }
