@@ -21,7 +21,9 @@ for i in docker httpd; do
     systemctl enable $i && systemctl start $i
 done
 
-echo "This is HTTPD from Terrafrom Certification $(uname -n)" > /var/www/html/index.html
+EC2_AVAILA_ZONE=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+
+echo "$EC2_AVAILA_ZONE This is HTTPD from Terrafrom Certification $(uname -n)" > /var/www/html/index.html
 
 # WORK=/opt/wp-docker
 # mkdir -p $WORK
