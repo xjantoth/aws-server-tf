@@ -69,12 +69,16 @@ module "aws_asg" {
 #   vpc_id                 = data.aws_vpc.default.id
 # }
 
-module "aws_elasticcache" {
-  source                 = "./modules/aws_elasticcache"
-  custom_tags            = var.custom_tags
-  vpc_security_group_ids = list(module.aws_server_security_group.server_security_group_id)
-  vpc_id                 = data.aws_vpc.default.id
-}
+# module "aws_elasticcache" {
+#   source                 = "./modules/aws_elasticcache"
+#   custom_tags            = var.custom_tags
+#   vpc_security_group_ids = list(module.aws_server_security_group.server_security_group_id)
+#   vpc_id                 = data.aws_vpc.default.id
+# }
 
+# module "aws_s3" {
+#   source                 = "./modules/aws_s3"
+
+# }
 
 

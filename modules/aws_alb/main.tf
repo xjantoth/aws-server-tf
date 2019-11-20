@@ -40,13 +40,20 @@ resource "aws_lb_target_group" "http" {
     enabled         = true
   }
 
+  health_check {
+    path                = "/"
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    interval            = 30
+    matcher             = "200"
+  }
+
   tags = {
     for a, b in var.custom_tags :
     a => (a == "Name" ? format("%s-%s", "tg-alb", each.value) : b)
   }
 }
-
-
 
 resource "aws_lb_listener" "front_end" {
   for_each = toset(local.tcp_ports)
