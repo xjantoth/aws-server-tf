@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "this" {
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        kms_master_key_id = "${aws_kms_key.mykey.arn}"
+        kms_master_key_id = aws_kms_key.mykey.arn
         sse_algorithm     = "aws:kms"
       }
     }
@@ -25,7 +25,6 @@ resource "aws_s3_bucket" "this" {
     enabled = true
   }
 }
-
 
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id

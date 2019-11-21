@@ -79,7 +79,7 @@ resource "aws_launch_template" "this" {
     tags = var.custom_tags
   }
   vpc_security_group_ids = var.vpc_security_group_ids
-  user_data              = "${base64encode(data.template_file.initial_script.rendered)}"
+  user_data              = base64encode(data.template_file.initial_script.rendered)
 }
 
 

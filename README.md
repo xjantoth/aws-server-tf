@@ -36,3 +36,47 @@ dig NS devopsinuse.com
 
 will print Name Servers resolving this domain name
 ```
+
+
+# S3
+
+```bash
+https://docs.aws.amazon.com/cli/latest/index.html
+https://awspolicygen.s3.amazonaws.com/policygen.html
+
+aws s3 ls help
+aws s3 ls
+aws s3 mb s3://new-bucket-cert
+aws s3 ls s3://new-bucket-cert
+aws s3 cp s3://new-bucket-cert/coffee.jpg coffee.jpg 
+aws  s3api delete-bucket --bucket new-bucket-cert --region eu-central-1
+```
+
+# AWS EC2 MInstance Metadata
+
+```bash
+ curl http://169.254.169.254/latest/meta-data
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+events/
+hostname
+iam/
+identity-credentials/
+instance-action
+instance-id
+instance-type
+local-hostname
+local-ipv4
+mac
+metrics/
+network/
+placement/
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+```

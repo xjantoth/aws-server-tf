@@ -1,21 +1,21 @@
 variable "ssh_public_key" {
   description = "SSH public key"
-  type        = "string"
+  type        = string
 }
 
 variable "initial_script" {
   description = "Initial Shell script - User Data"
-  type        = "string"
+  type        = string
 }
 
 variable "server_security_group_name" {
   description = "Server security group Name"
-  type        = "string"
+  type        = string
 }
 
 variable "custom_tags" {
   description = "Custom certification tags"
-  type        = "map"
+  type        = map
 }
 
 variable "number_of_inatances" {

@@ -35,7 +35,7 @@ locals {
 resource "aws_instance" "certification" {
   count = var.number_of_inatances
 
-  ami           = "${data.aws_ami.this.id}"
+  ami           = data.aws_ami.this.id
   instance_type = "t2.micro"
 
   security_groups = toset([var.server_security_group_name])
@@ -43,7 +43,7 @@ resource "aws_instance" "certification" {
 
   # Notice that User Data Shell script will be copied:
   # /bin/bash /var/lib/cloud/instance/scripts/part-001
-  user_data = "${data.template_file.initial_script.rendered}"
+  user_data = data.template_file.initial_script.rendered
   # user_data = "${local.local_user_data}"
 
   # placement_group = aws_placement_group.partition.id
@@ -93,6 +93,11 @@ resource "aws_iam_policy" "policy" {
                 "s3:Get*",
                 "s3:List*"
             ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
             "Resource": "*"
         }
     ]

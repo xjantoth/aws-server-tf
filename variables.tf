@@ -1,30 +1,30 @@
 variable "aws_region" {
-  type        = "string"
+  type        = string
   description = "AWS region"
 }
 
 variable "aws_access_key" {
-  type        = "string"
+  type        = string
   description = "AWS region"
 }
 variable "aws_secret_key" {
-  type        = "string"
+  type        = string
   description = "AWS region"
 }
 
 variable "ssh_public_key" {
   description = "SSH public key"
-  type        = "string"
+  type        = string
 }
 
 variable "initial_script" {
   description = "Initial Shell script - User Data"
-  type        = "string"
+  type        = string
 }
 
 variable "custom_tags" {
   description = "Custom certification tags"
-  type        = "map"
+  type        = map
 }
 
 variable "number_of_inatances" {
