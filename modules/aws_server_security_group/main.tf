@@ -25,7 +25,7 @@ resource "aws_security_group" "this" {
     }
   }
 
-  
+
 
   dynamic "ingress" {
     for_each = local.allow_ssh_port

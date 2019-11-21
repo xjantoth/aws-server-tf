@@ -48,6 +48,8 @@ resource "aws_instance" "certification" {
 
   # placement_group = aws_placement_group.partition.id
 
+  iam_instance_profile = aws_iam_instance_profile.instance_profile.name
+
   tags = {
     for a, b in var.custom_tags :
     a => (a == "Name" ? format("%s-%s", "ec2-instance", count.index + 1) : b)
@@ -55,7 +57,53 @@ resource "aws_instance" "certification" {
 
 }
 
+resource "aws_iam_instance_profile" "instance_profile" {
+  name = "AllowEC2ReadOnlyS3bucketsRoleTerraform"
+  role = aws_iam_role.role.name
+}
 
+resource "aws_iam_role" "role" {
+  name = "AllowEC2ReadOnlyS3bucketsRoleTerraform"
+
+  assume_role_policy = <<EOF
+{"Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "policy" {
+  name        = "AllowEC2ReadOnlyS3bucketsPolicyTerraform"
+  description = "A test policy"
+
+  policy = <<EOF
+{"Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "test-attach" {
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.policy.arn
+}
 
 
 
